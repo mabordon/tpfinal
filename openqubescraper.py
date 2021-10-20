@@ -9,9 +9,12 @@ from singleton import Singleton
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.proxy import Proxy, ProxyType
 from proxyservice import ProxyPool
+from itbatools import extract_digits
+
 __url__="https://openqube.io/company/everis/"
 __sleeptime__=2
 __counter__=16
+__records__=2
 class OpenQubeScraper(metaclass=Singleton):
       def __init__(self,proxy):
              self.driver=driver = webdriver.Firefox(executable_path= get_firefox_driver_hook().executable_path,options=opts, proxy=proxy) 
@@ -23,7 +26,9 @@ class OpenQubeScraper(metaclass=Singleton):
              comments=[]  
              self.driver.get(self.baseurl) 
              lista= self.driver.find_elements_by_class_name("reviewlist__items")
-             counter=self.driver.find_elements_by_class_name("reviewlist__title")
+             items=self.driver.find_elements_by_class_name("reviewlist__title")
+             __counter__=(extract_digits(items[0].find_element_by_tag_name("span").text)//__records__)+1
+             print(__counter__)
              for scroll_index in range(0,__counter__):
                     button=self.driver.find_element_by_class_name("viewmore__button")   
                     time.sleep(__sleeptime__)            

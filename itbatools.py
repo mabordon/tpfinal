@@ -20,7 +20,12 @@ class PropertyHook(metaclass=Service):
                               _instance.__load_properties(services[servicetype])
                        return _instance
              
-               
+def extract_digits(input):
+      number=''.join(filter(str.isdigit, input))
+      if number.isdigit():
+           return int(number)
+      else:
+            return 0              
 
 def get_db_property_hook():
          return PropertyHook.get_instance("comentarios_db")
