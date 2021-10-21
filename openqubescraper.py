@@ -14,12 +14,11 @@ from itbatools import extract_digits
 __website__="openqube.io"
 __url__="https://{0}/company/everis/".format(__website__)
 __sleeptime__=2
-__counter__=16
 __records__=2
-
+__max_score__=10
 class OpenQubeScraper(metaclass=Singleton):
       def __init__(self,proxy):
-             self.driver=driver = webdriver.Firefox(executable_path= get_firefox_driver_hook().executable_path,options=opts, proxy=proxy) 
+             self.driver= webdriver.Firefox(executable_path= get_firefox_driver_hook().executable_path,options=opts, proxy=proxy) 
              self.baseurl =__url__
              self.driver.get(self.baseurl) 
       @classmethod
@@ -30,6 +29,7 @@ class OpenQubeScraper(metaclass=Singleton):
                          sections=self.driver.find_elements_by_class_name("company__item-rating")
                          company_ratings={}
                          company_ratings["website"]=__website__
+                         company_ratings["maxscore"]=__max_score__
                          for section in sections:
                                   aspect=section.find_elements_by_class_name("company__item-ratingtxt")[0].text
                                   rating=section.find_elements_by_class_name("company__item-ratingnum")[0].text
@@ -70,5 +70,5 @@ if __name__=='__main__':
                  })
         instance=OpenQubeScraper.get_instance(proxy)
         print(instance.get_rating_summary())
-        #for items in instance.get_comments():
-        #    print(items)
+        for items in instance.get_comments():
+            print(items)
