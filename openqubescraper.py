@@ -11,11 +11,12 @@ from selenium.webdriver.common.proxy import Proxy, ProxyType
 from proxyservice import ProxyPool
 from itbatools import extract_digits
 
-__url__="https://openqube.io/company/everis/"
+__website__="openqube.io"
+__url__="https://{0}/company/everis/".format(__website__)
 __sleeptime__=2
 __counter__=16
 __records__=2
-__website__="openqube.io"
+
 class OpenQubeScraper(metaclass=Singleton):
       def __init__(self,proxy):
              self.driver=driver = webdriver.Firefox(executable_path= get_firefox_driver_hook().executable_path,options=opts, proxy=proxy) 
