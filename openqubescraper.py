@@ -15,16 +15,27 @@ __url__="https://openqube.io/company/everis/"
 __sleeptime__=2
 __counter__=16
 __records__=2
+__website__="openqube.io"
 class OpenQubeScraper(metaclass=Singleton):
       def __init__(self,proxy):
              self.driver=driver = webdriver.Firefox(executable_path= get_firefox_driver_hook().executable_path,options=opts, proxy=proxy) 
              self.baseurl =__url__
+             self.driver.get(self.baseurl) 
       @classmethod
       def get_instance(cls,proxy):
             return OpenQubeScraper(proxy)
+      def get_rating_summary(self):
+                         #Recuperar los puntajes del sitio                         
+                         sections=self.driver.find_elements_by_class_name("company__item-rating")
+                         company_ratings={}
+                         company_ratings["website"]=__website__
+                         for section in sections:
+                                  aspect=section.find_elements_by_class_name("company__item-ratingtxt")[0].text
+                                  rating=section.find_elements_by_class_name("company__item-ratingnum")[0].text
+                                  company_ratings[aspect]=rating
+                         return company_ratings
       def get_comments(self):    
-             comments=[]  
-             self.driver.get(self.baseurl) 
+             comments=[]           
              lista= self.driver.find_elements_by_class_name("reviewlist__items")
              items=self.driver.find_elements_by_class_name("reviewlist__title")
              __counter__=(extract_digits(items[0].find_element_by_tag_name("span").text)//__records__)+1
@@ -57,5 +68,6 @@ if __name__=='__main__':
                  'noProxy': '' 
                  })
         instance=OpenQubeScraper.get_instance(proxy)
-        for items in instance.get_comments():
-            print(items)
+        print(instance.get_rating_summary())
+        #for items in instance.get_comments():
+        #    print(items)
