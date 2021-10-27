@@ -35,9 +35,35 @@ class IndeedScraper(metaclass=Singleton):
                 rating=tags[0].text
                 company_ratings[aspect]=rating    
            return company_ratings     
-      def get_comments(self):    
-             comments=[]  
-
+      def get_comments(self):               
+      
+            comments= self.driver.find_elements_by_class_name("css-e6s05i")
+            for comment in comments:
+                     item_title=comment.find_elements_by_class_name("css-i1omlj")
+                     title=""   
+                     if len(item_title)>0:
+                              title=item_title[0].find_element_by_class_name("css-82l4gy").text
+                              #print(title)                        
+                     item_body=comment.find_elements_by_class_name("css-rr5fiy")
+                     #print(len(item_body),title)
+                     if len(item_body)>0:
+                           elem=item_body[0].find_elements_by_class_name("css-1cxc9zk")
+                           if len(elem)>0:                             
+                               texto=elem[0].find_element_by_xpath("span/span").text 
+                               #print(texto+"\n")
+                     if len(item_body)>1:     
+                               #print(len(item_body))     
+                               procons_title=item_body[1].find_elements_by_tag_name("h2")
+                               #print(procons_title[0].text)      
+                               if len(procons_title)>1:
+                                      print(procons_title[0].text,procons_title[1].text)                               
+                               div=item_body[1].find_elements_by_class_name("css-1z0411s")
+                               print(len(div))
+                               if (len(div)>1):
+                                    pro=div[0].find_element_by_tag_name("span").find_element_by_tag_name("span").text                                  
+                                    cons=div[1].find_element_by_tag_name("span").find_element_by_tag_name("span").text
+                                    print(pro,cons)
+                     
 
 if __name__=='__main__':
         pool = ProxyPool.get_instance()
@@ -52,3 +78,4 @@ if __name__=='__main__':
                  })
         instance=IndeedScraper.get_instance(proxy)
         print(instance.get_rating_summary())
+        instance.get_comments()
