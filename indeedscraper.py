@@ -57,8 +57,9 @@ class IndeedScraper(metaclass=Singleton):
                                       print(procons_title[0].text,procons_title[1].text)                               
                                div=item_body[1].find_elements_by_class_name("css-1z0411s")                           
                                if (len(div)>1):
-                                    pro=div[0].find_element_by_tag_name("span").find_element_by_tag_name("span").text                                  
-                                    cons=div[1].find_element_by_tag_name("span").find_element_by_tag_name("span").text
+                                    #pro=div[0].find_element_by_tag_name("span").find_element_by_tag_name("span").text                                  
+                                    pro=div[0].find_element_by_xpath("span/span").text
+                                    cons=div[1].find_element_by_xpath("span/span").text #div[1].find_element_by_tag_name("span").find_element_by_tag_name("span").text
                                     print(pro,cons)
                      
 
