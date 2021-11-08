@@ -14,6 +14,7 @@ __website__="ar.indeed.com"
 __url__="https://{0}/cmp/Ntt-Data/reviews?fcountry=ALL".format(__website__)
 __sleeptime__=2
 __max_score__=5
+__page_size__=20
 class IndeedScraper(metaclass=Singleton):
       def __init__(self,proxy):
              self.driver=webdriver.Firefox(executable_path= get_firefox_driver_hook().executable_path,options=opts, proxy=proxy) 
@@ -35,32 +36,69 @@ class IndeedScraper(metaclass=Singleton):
                 rating=tags[0].text
                 company_ratings[aspect]=rating    
            return company_ratings     
-      def get_comments(self):               
-      
+
+      def print_comments(self):              
+                     counter=__page_size__         
+                     for page in range(0,3):
+                             self.get_comments() 
+                             time.sleep(__sleeptime__)                              
+                             url=self.baseurl+"&start={0}".format(counter)
+                             print(url)
+                             self.driver.get(url)
+                             counter+=__page_size__
+                           
+      def get_comments(self):      
             comments= self.driver.find_elements_by_class_name("css-e6s05i")
             for comment in comments:
                      item_title=comment.find_elements_by_class_name("css-i1omlj")
                      title=""   
                      if len(item_title)>0:
                               title=item_title[0].find_element_by_class_name("css-82l4gy").text
-                              print(title)  
+                              print("El titulo es ",title)  
 
                      item_body=comment.find_elements_by_class_name("css-rr5fiy")
                      if len(item_body)>0:
                            elem=item_body[0].find_elements_by_class_name("css-1cxc9zk")
-                           if len(elem)>0:                             
-                               texto=elem[0].find_element_by_xpath("span/span").text 
-                               #print(texto+"\n")
+                           print(len(elem))
+                           if len(elem)>0:                            
+                                paragraphs=elem[0].find_elements_by_xpath("span/span")
+                                for p in paragraphs:
+                                    print(p.text)
+                           else:
+                                 elem=item_body[0].find_elements_by_class_name("css-qodkr")
+                                 if len(elem)>0:                            
+                                       paragraphs=elem[0].find_elements_by_xpath("span/span")
+                                       for p in paragraphs:
+                                           print(p.text)
+
+
                      if len(item_body)>1:                                 
-                               procons_title=item_body[1].find_elements_by_tag_name("h2")                               
+                               procons_title=item_body[1].find_elements_by_tag_name("h2")   
+
+                               if len(procons_title)>0:
+                                         print(procons_title[0].text)                        
                                if len(procons_title)>1:
-                                      print(procons_title[0].text,procons_title[1].text)                               
-                               div=item_body[1].find_elements_by_class_name("css-1z0411s")                           
-                               if (len(div)>1):                                        
-                                    pro=div[0].find_element_by_xpath("span/span").text
+                                        print(procons_title[1].text)        
+
+                               div=item_body[1].find_elements_by_class_name("css-1z0411s")  
+
+                               if (len(div)>0):
+                                     pro=div[0].find_element_by_xpath("span/span").text    
+                                     print(pro)     
+
+                               if (len(div)>1):                                      
                                     cons=div[1].find_element_by_xpath("span/span").text 
-                                    print(pro,cons)
-                     
+                                    print(cons)         
+                               else:
+                                    div=item_body[1].find_elements_by_class_name("css-1jysqrt")  
+                                    if len(div)>0:
+                                         pro=div[0].find_element_by_xpath("span/span").text
+                                         print(pro)  
+
+                                    if (len(div)>1):                                       
+                                        cons=div[1].find_element_by_xpath("span/span").text 
+                                        print(cons)         
+
 
 if __name__=='__main__':
         pool = ProxyPool.get_instance()
@@ -75,4 +113,4 @@ if __name__=='__main__':
                  })
         instance=IndeedScraper.get_instance(proxy)
         print(instance.get_rating_summary())
-        instance.get_comments()
+        instance.print_comments()
