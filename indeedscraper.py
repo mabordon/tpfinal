@@ -4,7 +4,7 @@ from selenium.webdriver.firefox.options import Options
 opts = Options()
 opts.headless = True
 assert opts.headless
-from itbatools import get_firefox_driver_hook
+from itbatools import get_firefox_driver_hook,extract_digits
 from singleton import Singleton
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.proxy import Proxy, ProxyType
@@ -37,8 +37,11 @@ class IndeedScraper(metaclass=Singleton):
                 company_ratings[aspect]=rating    
            return company_ratings     
 
-      def print_comments(self):              
-                     counter=__page_size__         
+      def print_comments(self):             
+                     reviews_counter=self.get_reviews_counter() 
+                     counter=__page_size__
+                     times=(reviews_counter //__page_size__)
+                     print("La cantidad de iteraciones sera",times)         
                      for page in range(0,3):
                              self.get_comments() 
                              time.sleep(__sleeptime__)                              
@@ -46,7 +49,13 @@ class IndeedScraper(metaclass=Singleton):
                              print(url)
                              self.driver.get(url)
                              counter+=__page_size__
-                           
+      def get_reviews_counter(self): 
+          #Recupera la cantidad de reviews de la pagina        
+          result=0
+          div=self.driver.find_element_by_class_name("css-r5p2ca")
+          if (div):
+               result=extract_digits(div.find_element_by_tag_name("span").text)        
+          return result        
       def get_comments(self):      
             comments= self.driver.find_elements_by_class_name("css-e6s05i")
             for comment in comments:
@@ -57,6 +66,7 @@ class IndeedScraper(metaclass=Singleton):
                               print("El titulo es ",title)  
 
                      item_body=comment.find_elements_by_class_name("css-rr5fiy")
+
                      if len(item_body)>0:
                            elem=item_body[0].find_elements_by_class_name("css-1cxc9zk")
                            print(len(elem))
