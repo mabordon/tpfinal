@@ -18,5 +18,8 @@ class TranslatorApi(metaclass=Singleton):
 
 if __name__=='__main__':
          t=TranslatorApi.get_instance()
-         resultado=t.translate("Hola Mundo")
-         print(resultado.text)
+         mensaje="{'Pros': 'Un lugar donde se piensa en la gente. Más allá de beneficios o grandes salarios. Lo que importa es la gente y su desarrollo.', 'Cons': 'Podrían mejorar el rango salarial, pero en general está bien'}"
+         resultado=t.translate(mensaje)
+         mensaje=json.loads(resultado.text)
+         print(mensaje["text"][0])
+      

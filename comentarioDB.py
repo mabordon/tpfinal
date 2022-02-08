@@ -11,9 +11,17 @@ class ComentarioDB(metaclass=Singleton):
            self._comentarios=self._db.comentarios
     def insert_comentario(self,comentario):
         self._comentarios.insert_one(comentario)
+    def delete_comentario(self,comentario):
+        self._comentarios.delete_one(comentario)  
     def printrecords(self):
              for comentario in self._comentarios.find({}):
                  print(comentario)
+    def test_add(self):
+           comentario={"body":"Hello"}
+           self.insert_comentario(comentario)
+    def test_delete(self): 
+           comentario={"body":"Hello"} 
+           self.delete_comentario(comentario)
     @classmethod
     def getDataBase(cls):
        _dbconfigurator=get_db_property_hook()
@@ -22,5 +30,8 @@ class ComentarioDB(metaclass=Singleton):
     
 
 if __name__=='__main__':
-        db=ComentarioDB.getDataBase()      
+        db=ComentarioDB.getDataBase()    
+        db.test_delete()  
+        db.test_add()
         db.printrecords()
+        
