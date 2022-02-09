@@ -13,6 +13,8 @@ class ComentarioDB(metaclass=Singleton):
         self._comentarios.insert_one(comentario)
     def delete_comentario(self,comentario):
         self._comentarios.delete_one(comentario)  
+    def delete_many(self,criteria):
+        self._comentarios.delete_many(criteria)
     def printrecords(self):
              for comentario in self._comentarios.find({}):
                  print(comentario)
