@@ -1,5 +1,6 @@
 from selenium import webdriver 
 import time
+import json
 from selenium.webdriver.firefox.options import Options
 opts = Options()
 opts.headless = True
@@ -9,12 +10,18 @@ from singleton import Singleton
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.proxy import Proxy, ProxyType
 from proxyservice import ProxyPool
+from translatorapi import TranslatorApi
+from comentarioDB import ComentarioDB
 
 __website__="ar.indeed.com"
 __url__="https://{0}/cmp/Ntt-Data/reviews?fcountry=ALL".format(__website__)
 __sleeptime__=2
 __max_score__=5
 __page_size__=20
+
+translator=TranslatorApi.get_instance()   
+dbComentarios=ComentarioDB.getDataBase()   
+
 class IndeedScraper(metaclass=Singleton):
       def __init__(self,proxy):
              self.driver=webdriver.Firefox(executable_path= get_firefox_driver_hook().executable_path,options=opts, proxy=proxy) 
@@ -109,8 +116,7 @@ class IndeedScraper(metaclass=Singleton):
                                         cons=div[1].find_element_by_xpath("span/span").text 
                                         print(cons)         
 
-
-if __name__=='__main__':
+def print_comentarios():
         pool = ProxyPool.get_instance()
         pool.refresh()        
         myProxy = pool.get_next()
@@ -124,3 +130,6 @@ if __name__=='__main__':
         instance=IndeedScraper.get_instance(proxy)
         print(instance.get_rating_summary())
         instance.print_comments()
+
+if __name__=='__main__':
+         print_comentarios()
