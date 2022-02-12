@@ -18,8 +18,9 @@ class TranslatorApi(metaclass=Singleton):
 
 if __name__=='__main__':
          t=TranslatorApi.get_instance()
-         mensaje="{'mensaje': '1'}"        
+         mensaje="{'mensaje': Ambiente di lavoro ottimo'}"        
+         #mensaje='Ambiente di lavoro ottimo'
          resultado=t.translate(mensaje)
          mensaje=json.loads(resultado.text)
-         print(mensaje["text"][0])
+         print(mensaje)
       
