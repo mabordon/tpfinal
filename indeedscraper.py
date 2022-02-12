@@ -75,8 +75,9 @@ class IndeedScraper(metaclass=Singleton):
           return result        
       def add_comments(self):
             comments= self.driver.find_elements_by_class_name("css-e6s05i")
-            page_comment={}
+          
             for comment in comments:
+                     page_comment={}
                      item_title=comment.find_elements_by_class_name("css-i1omlj")
                      title=""   
                      if len(item_title)>0:
@@ -96,7 +97,8 @@ class IndeedScraper(metaclass=Singleton):
                                        paragraphs=elem[0].find_elements_by_xpath("span/span")
                                        for p in paragraphs:
                                            page_comment["body"]+=p.text
-                           page_comment["body"]=json.loads((translator.translate(page_comment["body"])).text)["text"][0]
+                           if "body" in page_comment.keys():                
+                                page_comment["body"]=json.loads((translator.translate(page_comment["body"])).text)["text"][0]
                      if len(item_body)>1:                                 
                                procons_title=item_body[1].find_elements_by_tag_name("h2") 
                                div=item_body[1].find_elements_by_class_name("css-1z0411s")  
@@ -118,9 +120,16 @@ class IndeedScraper(metaclass=Singleton):
                                         cons=div[1].find_element_by_xpath("span/span").text
                                         page_comment["Cons"]=cons                       
                                page_comment["website"] =__website__ 
-                               page_comment["Pros"]=json.loads((translator.translate(page_comment["Pros"])).text)["text"][0]  
-                               page_comment["Cons"]=json.loads((translator.translate(page_comment["Cons"])).text)["text"][0]
-                               print(page_comment)            
+                               if "Pros" in page_comment.keys():
+                                   page_comment["Pros"]=json.loads((translator.translate(page_comment["Pros"])).text)["text"][0] 
+
+                               if "Cons" in page_comment.keys(): 
+                                   page_comment["Cons"]=json.loads((translator.translate(page_comment["Cons"])).text)["text"][0]
+                               print(page_comment)                             
+                               dbComentarios.insert_comentario(page_comment)  
+                               print("Termino de imprimir")  
+                             
+                              
 
 def process_indeed():
         pool = ProxyPool.get_instance()
@@ -135,25 +144,9 @@ def process_indeed():
                  })
         instance=IndeedScraper.get_instance(proxy)
         print(instance.get_rating_summary())
-        
-      #  instance.save_rating_summary()
-       # print("Fin del guardado")
-def print_comentarios():
-        pool = ProxyPool.get_instance()
-        pool.refresh()        
-        myProxy = pool.get_next()
-        proxy = Proxy({
-                 'proxyType': ProxyType.MANUAL,
-                 'httpProxy': myProxy,
-                 'ftpProxy': myProxy,
-                 'sslProxy': myProxy,
-                 'noProxy': '' 
-                 })
-        instance=IndeedScraper.get_instance(proxy)
-        print(instance.get_rating_summary())
         print(instance.get_reviews_counter())
-       # instance.add_comments()
         instance.print_comments()
+        
 
 if __name__=='__main__':
-         print_comentarios()
+         process_indeed()
