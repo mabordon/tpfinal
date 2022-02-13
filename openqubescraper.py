@@ -108,7 +108,7 @@ def process_open_qub():
         instance=OpenQubeScraper.get_instance(proxy)
         print(instance.get_rating_summary())
         print("Borrando")
-        dbComentarios.delete_many({"website":"openqube.io"})
+        dbComentarios.delete_many({"website":__website__})
         print("Fin borrado")
         instance.save_rating_summary()
         print("Guardando comentarios")

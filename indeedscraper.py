@@ -58,7 +58,7 @@ class IndeedScraper(metaclass=Singleton):
                      counter=__page_size__
                      times=(reviews_counter //__page_size__)
                      print("La cantidad de iteraciones sera",times)         
-                     for page in range(0,1):
+                     for page in range(0,5):
                              self.add_comments() 
                              time.sleep(__sleeptime__)                              
                              url=self.baseurl+"&start={0}".format(counter)
@@ -125,9 +125,9 @@ class IndeedScraper(metaclass=Singleton):
 
                                if "Cons" in page_comment.keys(): 
                                    page_comment["Cons"]=json.loads((translator.translate(page_comment["Cons"])).text)["text"][0]
-                               print(page_comment)                             
+                           
                                dbComentarios.insert_comentario(page_comment)  
-                               print("Termino de imprimir")  
+                               
                              
                               
 
@@ -142,9 +142,13 @@ def process_indeed():
                  'sslProxy': myProxy,
                  'noProxy': '' 
                  })
+
         instance=IndeedScraper.get_instance(proxy)
         print(instance.get_rating_summary())
         print(instance.get_reviews_counter())
+        print("Borrando comentarios")
+        dbComentarios.delete_many({"website":__website__})
+        print("Fin borrando comentarios")
         instance.print_comments()
         
 
