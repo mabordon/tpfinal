@@ -30,28 +30,18 @@ class IndeedScraper(metaclass=Singleton):
             
       @classmethod
       def get_instance(cls,proxy):
-            return IndeedScraper(proxy)
-      def save_rating_summary(self):
-          ratings={}        
-          company_ratings=self.get_rating_summary() 
-          rating_item=json.loads(translator.translate(json.dumps(company_ratings)).text)["text"][0]
-          ratings["website"]=__website__
-          ratings["rating"]=rating_item
-          dbComentarios.insert_comentario(ratings)
-      def get_rating_summary(self):                  
-           company_ratings={}
-           company_ratings["website"]=__website__
-           company_ratings["maxscore"]=__max_score__            
-                   #Recuperamos los puntajes del sitio 
-           sections=self.driver.find_elements_by_class_name("css-mcjliz")
-           print("Imprimiendo las secciones")
-           for section in sections:
-                print(section)
-                tags=section.find_elements_by_tag_name("span")             
-                aspect=tags[2].text
-                rating=tags[0].text
-                company_ratings[aspect]=rating    
-           return company_ratings     
+            return IndeedScraper(proxy)  
+     
+      def save_ratings_summary(self):    
+                titles=self.driver.find_elements_by_class_name("css-7bbylr")   
+                ratings=self.driver.find_elements_by_class_name("css-1vmx0e0")
+                company_ratings={}
+                for title, rating in zip(titles,ratings):
+                     company_ratings[title.text]=rating.text
+                company_ratings["website"]=__website__
+                company_ratings["maxscore"]=__max_score__ 
+                print(company_ratings) 
+                dbComentarios.insert_comentario(company_ratings)
 
       def print_comments(self):             
                      reviews_counter=self.get_reviews_counter() 
@@ -74,8 +64,7 @@ class IndeedScraper(metaclass=Singleton):
                result=extract_digits(div.find_element_by_tag_name("span").text)        
           return result        
       def add_comments(self):
-            comments= self.driver.find_elements_by_class_name("css-e6s05i")
-          
+            comments= self.driver.find_elements_by_class_name("css-e6s05i")          
             for comment in comments:
                      page_comment={}
                      item_title=comment.find_elements_by_class_name("css-i1omlj")
@@ -144,13 +133,13 @@ def process_indeed():
                  })
 
         instance=IndeedScraper.get_instance(proxy)
-        print(instance.get_rating_summary())
-        print(instance.get_reviews_counter())
+        instance.save_ratings_summary()
+       # print(instance.get_reviews_counter())
         print("Borrando comentarios")
-        dbComentarios.delete_many({"website":__website__})
+      #  dbComentarios.delete_many({"website":__website__})
         print("Fin borrando comentarios")
-        instance.print_comments()
-        
+       # instance.print_comments()
+
 
 if __name__=='__main__':
          process_indeed()
