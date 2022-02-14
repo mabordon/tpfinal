@@ -136,9 +136,9 @@ def process_indeed():
         instance.save_ratings_summary()
        # print(instance.get_reviews_counter())
         print("Borrando comentarios")
-      #  dbComentarios.delete_many({"website":__website__})
+        dbComentarios.delete_many({"website":__website__})
         print("Fin borrando comentarios")
-       # instance.print_comments()
+        instance.print_comments()
 
 
 if __name__=='__main__':
