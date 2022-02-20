@@ -1,34 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listado de contactos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    
+
 </head>
 <body>
-    <h3>Aplicando en el procesamiento los siguientes criterios</h3>
-    {% for criterio in criterios %}
-        {{ criterio.nombre }}
-    {% endfor %}
-    <form method='post'>
-        {% csrf_token %}
-       <input type="hidden" value="Prueba" name="Prueba1">
-       <button type="submit" name="prueba01" value="Cargar">Cargar</button> 
+    <div class="container">
+        <h2>TFI ITBA - Especialización en Ciencia de datos</h2>
+        <p><strong>Visualización de gráficos</strong>. Haga click sobre cada panel para acceder</p>
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">1- Carga de datos</a>
+                </h4>
+              </div>
+              <div id="collapse1" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <form method='post'>
+                        {% csrf_token %}
+                       <input type="hidden" value="Prueba" name="Prueba1">
+                       <button type="submit" class="btn btn-success" name="prueba01" value="Cargar">Cargar</button> 
+                
+                    </form>
+                 </div>
+              </div>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">2- Análisis y Procesamiento</a>
+                  </h4>
+                </div>
+                <div id="collapse2" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    {% for criterio in criterios %}
+                    {{ criterio.nombre }}
+                {% endfor %}
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Cras justo odio</li>
+                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                    <li class="list-group-item">Morbi leo risus</li>
+                    <li class="list-group-item">Porta ac consectetur ac</li>
+                    <li class="list-group-item">Vestibulum at eros</li>
+                  </ul>    
 
-    </form>
-    <form method='post'>
-        {% csrf_token %}
-       <input type="hidden" value="Prueba2" name="Prueba2">
-       <button type="submit" name="prueba02" value="Procesar">Procesar</button> 
 
-    </form>
+                <form method='post'>
+                    {% csrf_token %}
+                   <input type="hidden" value="Prueba2" name="Prueba2">
+                   <button type="submit" class="btn btn-warning" name="prueba02" value="Procesar">Procesar</button> 
+            
+                </form>
+
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">3- Reportes</a>
+                  </h4>
+                </div>
+                <div id="collapse3" class="panel-collapse collapse">
+                  <div class="panel-body">
+              
+                  </div>
+                </div>
+              </div>
+
+
+
+
+        </div>     
+    
+   
     <form method='post'>
         {% csrf_token %}
        <input type="hidden" value="Prueba3" name="Prueba3">
        <button type="submit" name="prueba03" value="Reporte">Reportes</button> 
 
     </form>
-
+    </div>
 </body>
 </html>
