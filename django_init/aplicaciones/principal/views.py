@@ -5,10 +5,18 @@ from django.http import HttpResponse
 # Create your views here.
 
 def inicio(request):
-    criterios=Criterio.objects.all()
-    print(criterios)
-    contexto={'criterios':criterios}
-    return render(request,'index.html',contexto)
+    if request.method=='GET':
+        print("Invocacion via GET")
+        criterios=Criterio.objects.all()
+        print(criterios)
+        contexto={'criterios':criterios}
+        return render(request,'index.html',contexto)
+    else:
+          if request.method=='POST':
+                 print(request)
+                 print(request.__dict__)
+                 print("invocaste a un post")
+                 return render(request,'index.html')
  # items=Criterio.objects.all()
  # for item in items:
  #     print(item.nombre)

@@ -11,5 +11,11 @@
     {% for criterio in criterios %}
         {{ criterio.nombre }}
     {% endfor %}
+    <form method='post'>
+        {% csrf_token %}
+       <input type="hidden" value="Prueba" name="Prueba1">
+       <button type="submit" value="Cargar">Cargar</button> 
+
+    </form>
 </body>
 </html>
