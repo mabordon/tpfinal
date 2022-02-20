@@ -15,6 +15,8 @@ def inicio(request):
           if request.method=='POST':
                  print(request)
                  print(request.__dict__)
+                 print("Recuperando valor")
+                 print(request.POST.get("Prueba1"))
                  print("invocaste a un post")
                  return render(request,'index.html')
  # items=Criterio.objects.all()
