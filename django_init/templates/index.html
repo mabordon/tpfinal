@@ -11,7 +11,7 @@
 <body>
     <div class="container">
         <h2>TFI ITBA - Especialización en Ciencia de datos</h2>
-        <p><strong>Visualización de gráficos</strong>. Haga click sobre cada panel para acceder</p>
+        <p><strong>ETL</strong>. Haga click sobre cada panel para acceder</p>
         <div class="panel-group" id="accordion">
             <div class="panel panel-primary">
               <div class="panel-heading">
@@ -38,17 +38,11 @@
                 </div>
                 <div id="collapse2" class="panel-collapse collapse">
                   <div class="panel-body">
+                    <ul class="list-group list-grohup-flus">
                     {% for criterio in criterios %}
-                    {{ criterio.nombre }}
+                    <li class="list-group-item">{{ criterio.nombre }}</li>
                 {% endfor %}
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Cras justo odio</li>
-                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                    <li class="list-group-item">Morbi leo risus</li>
-                    <li class="list-group-item">Porta ac consectetur ac</li>
-                    <li class="list-group-item">Vestibulum at eros</li>
-                  </ul>    
-
+                    </ul>               
 
                 <form method='post'>
                     {% csrf_token %}
@@ -68,7 +62,12 @@
                 </div>
                 <div id="collapse3" class="panel-collapse collapse">
                   <div class="panel-body">
-              
+                    <form method='post'>
+                        {% csrf_token %}
+                       <input type="hidden" value="Prueba3" name="Prueba3">
+                       <button type="submit" class="btn btn-danger" name="prueba03" value="Reporte">Imprimir</button> 
+                
+                    </form>
                   </div>
                 </div>
               </div>
@@ -79,12 +78,7 @@
         </div>     
     
    
-    <form method='post'>
-        {% csrf_token %}
-       <input type="hidden" value="Prueba3" name="Prueba3">
-       <button type="submit" name="prueba03" value="Reporte">Reportes</button> 
-
-    </form>
+    
     </div>
 </body>
 </html>
