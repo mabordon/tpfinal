@@ -14,8 +14,21 @@
     <form method='post'>
         {% csrf_token %}
        <input type="hidden" value="Prueba" name="Prueba1">
-       <button type="submit" value="Cargar">Cargar</button> 
+       <button type="submit" name="prueba01" value="Cargar">Cargar</button> 
 
     </form>
+    <form method='post'>
+        {% csrf_token %}
+       <input type="hidden" value="Prueba2" name="Prueba2">
+       <button type="submit" name="prueba02" value="Procesar">Procesar</button> 
+
+    </form>
+    <form method='post'>
+        {% csrf_token %}
+       <input type="hidden" value="Prueba3" name="Prueba3">
+       <button type="submit" name="prueba03" value="Reporte">Reportes</button> 
+
+    </form>
+
 </body>
 </html>
