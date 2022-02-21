@@ -21,6 +21,9 @@
               </div>
               <div id="collapse1" class="panel-collapse collapse in">
                 <div class="panel-body">
+                    <p>Los siguientes son los orígenes de datos configurados para la extracción de información. Presione <strong>Cargar</strong> para dar comienzo 
+                    a la carga de datos.</p>
+                    
                     <form method='post'>
                         {% csrf_token %}
                     {% for website in websites %}
@@ -47,6 +50,8 @@
                 </div>
                 <div id="collapse2" class="panel-collapse collapse">
                   <div class="panel-body">
+                    <p>A continuación se listan los criterios configurados para la etapa de análisis de información. Presione <strong>Procesar</strong> para dar comienzo 
+                    </p>
                     <ul class="list-group list-grohup-flus">
                     {% for criterio in criterios %}
                     <li class="list-group-item">{{ criterio.nombre }}</li>
@@ -57,7 +62,7 @@
                     {% csrf_token %}
                    <input type="hidden" value="Prueba2" name="Prueba2">
                    <button type="submit" class="btn btn-warning" name="prueba02" value="Procesar">Procesar</button> 
-            
+                   
                 </form>
 
                   </div>
@@ -71,6 +76,8 @@
                 </div>
                 <div id="collapse3" class="panel-collapse collapse">
                   <div class="panel-body">
+                 <p>Presione <strong>Imprimir</strong> para generar reportes
+   
                     <form method='post'>
                         {% csrf_token %}
                        <input type="hidden" value="Prueba3" name="Prueba3">
