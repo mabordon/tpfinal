@@ -26,15 +26,17 @@
                     
                     <form method='post'>
                         {% csrf_token %}
+                        <ul class="list-group list-grohup-flus">
                     {% for website in websites %}
-                        <div class="form-check">
+                      <!-- <div class="form-check">
                             <input class="form-check-input" type="checkbox" name="{{ website.nombre }}" value="{{ website.nombre }}" id="flexCheckDefault">
                             <label class="form-check-label" for="flexCheckDefault">
                                 {{ website.nombre }}
                             </label>
-                          </div>  
+                          </div>  --> 
+                          <li class="list-group-item">{{ website.nombre }}</li>
                     {% endfor %}
-
+                </ul>
                        <input type="hidden" value="Prueba" name="Prueba1">
                        <button type="submit" class="btn btn-success" name="prueba01" value="Cargar">Cargar</button> 
                 
