@@ -13,8 +13,8 @@ def tokenize(paragraph):
 
 def analize(sentence):
 
-   analizador = SentimentIntensityAnalyzer()
-   scores = analizador.polarity_scores(sentence)
+   _analizer = SentimentIntensityAnalyzer()
+   scores = _analizer.polarity_scores(sentence)
    return scores
 
 if __name__=='__main__':
