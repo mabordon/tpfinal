@@ -48,7 +48,7 @@ class IndeedScraper(metaclass=Singleton):
                      counter=__page_size__
                      times=(reviews_counter //__page_size__)
                      print("La cantidad de iteraciones sera",times)         
-                     for page in range(0,5):
+                     for page in range(0,times):
                              self.add_comments() 
                              time.sleep(__sleeptime__)                              
                              url=self.baseurl+"&start={0}".format(counter)
