@@ -18,7 +18,7 @@ def analyze(sentence):
    return scores
 
 if __name__=='__main__':
-      sentences=tokenize("I am sure that is the reason why education is so important. What a beautiful day")
+      sentences=tokenize("The environment is so stressful. The salary is good")
       for sentence in sentences:
             print(analyze(sentence))
 
