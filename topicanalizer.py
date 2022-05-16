@@ -7,7 +7,7 @@ def analyze(sequence,candidate_labels):
    return result
 
 if __name__=='__main__':
-   sequence = "The managers are so rude"
+   sequence = "The projects are very interesting"
    candidate_labels = ["salary", "work-environment", "bosses"]
    result=analyze(sequence,candidate_labels)
    print(result)

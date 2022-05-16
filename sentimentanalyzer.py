@@ -17,6 +17,17 @@ def analyze(sentence):
    scores = _analyzer.polarity_scores(sentence)
    return scores
 
+def get_feeling(scores):
+     max=0
+     feeling=None
+     for category in scores.keys():
+         if category in ('pos','neg'):
+            if max<scores[category]:
+                 max=scores[category]
+                 feeling=category
+     return feeling     
+
+
 if __name__=='__main__':
       sentences=tokenize("The environment is so stressful. The salary is good")
       for sentence in sentences:
