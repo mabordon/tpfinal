@@ -13,9 +13,10 @@ def analyze(phrase, candidates):
             topic_result=topicanalizer.analyze(sentence,candidates)      
             detected_topic=topic_result["labels"][0]
             detected_feeling=sentimentanalyzer.get_feeling(feelings_results)
-            print(sentence,detected_feeling,detected_topic)   
+            #print(sentence,detected_feeling,detected_topic)   
             results["topic"]=detected_topic
             results["feeling"] = detected_feeling
+            results["phrase"]=sentence
       return results
 if __name__=='__main__':
        #phrase = "The managers are wonderful. The chances are good"
