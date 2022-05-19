@@ -30,6 +30,7 @@ def get_feeling(scores):
 
 if __name__=='__main__':
       sentences=tokenize("The environment is so stressful. The salary is good")
+  
       for sentence in sentences:
             print(analyze(sentence))
 

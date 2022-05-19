@@ -15,6 +15,8 @@ class ComentarioDB(metaclass=Singleton):
         self._comentarios.delete_one(comentario)  
     def delete_many(self,criteria):
         self._comentarios.delete_many(criteria)
+    def get_all_records(self):
+              return self._comentarios.find({})
     def printrecords(self):
              for comentario in self._comentarios.find({}):
                  print(comentario)
