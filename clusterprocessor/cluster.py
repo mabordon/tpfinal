@@ -7,6 +7,8 @@ import json
 input='./clusterprocessor/input/bajada.json'
 output='./clusterprocessor/output/cluster.png'
      
+
+
 def calculate_results(topiclist,opinions):
       results={}
       for topic, opinion in zip(topiclist,opinions):
@@ -59,10 +61,10 @@ def make_cluster(Data):
 
 def process():    
           data = open(input,)
-          data = json.load(data)    
-          print("Ejecutando cluster")
+          data = json.load(data)             
           make_cluster(data)
-          print("Finalizando...")
+          print("Done")
+        
 
 if __name__=='__main__':  
                  process()
