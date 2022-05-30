@@ -12,10 +12,11 @@ def analyze(phrase, candidates):
             feelings_results=sentimentanalyzer.analyze(sentence)
             topic_result=topicanalizer.analyze(sentence,candidates)      
             detected_topic=topic_result["labels"][0]
-            detected_feeling=sentimentanalyzer.get_feeling(feelings_results)
-            #print(sentence,detected_feeling,detected_topic)   
+            compound=sentimentanalyzer.get_compound(feelings_results)
+            #if sentimentanalyzer.negative_or_positive(feelings_results):
+            #print(sentence,detected_feeling,detected_topic, feelings_results)   
             results["topic"]=detected_topic
-            results["feeling"] = detected_feeling
+            results["feeling"] = compound
             results["phrase"]=sentence
       return results
 if __name__=='__main__':

@@ -16,12 +16,16 @@ def calculate_results(topiclist,opinions):
                       results[topic]=[opinion]
             else:
                       results[topic].append(opinion) 
+      print("Imprimiendo resultados")
+      print(results)
       return results
 
 def calculate_summarized(results):
        summarized={}
        for topic in results:       
          lista=results[topic]
+         print("Imprimiendo la lista")
+         print(topic,lista)
          summarized[topic]=0
          neg_count = len(list(filter(lambda x: (x < 0), lista)))
          pos_count = len(list(filter(lambda x: (x >= 0), lista)))
@@ -29,6 +33,7 @@ def calculate_summarized(results):
               summarized[topic]+=1
          if pos_count>0:
               summarized[topic]+=1
+         print("Estadisticas=>",topic,summarized[topic])
        return summarized
 
 #Devolvemos la cantidad de clusters
