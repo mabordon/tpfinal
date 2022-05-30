@@ -1,8 +1,11 @@
 
+import matplotlib
+import numpy as np
 from pandas import DataFrame
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 import json
+ 
 
 input='./clusterprocessor/input/bajada.json'
 output='./clusterprocessor/output/cluster.png'
@@ -53,9 +56,15 @@ def make_cluster(Data):
        kmeans = KMeans(n_clusters=calculate_k(Data['topic'],Data['opinion'])).fit(df)
        centroids = kmeans.cluster_centers_
        print(centroids)
-       print(kmeans.labels_)
-       plt.scatter(df['topic'], df['opinion'], c= kmeans.labels_.astype(float), s=50, alpha=0.5)
-       plt.scatter(centroids[:, 0], centroids[:, 1],marker = "o", alpha = 0.9,s=100,c='red',label='Centroides')
+       print(kmeans.labels_)     
+       colores=['red','green','blue','cyan','yellow','violet','orange','black']
+       asignar=[]
+       for row in kmeans.labels_:
+            asignar.append(colores[row])
+
+
+       plt.scatter(df['topic'], df['opinion'], marker="o",s=100, alpha=0.5,c=asignar) 
+       plt.scatter(centroids[:, 0], centroids[:, 1],marker = "*", alpha = 0.9,s=300,c='red',label='Centroides')
        plt.title('Clúster de  topicos')
        plt.xlabel('Topicos')
        plt.ylabel('Opiniones')
