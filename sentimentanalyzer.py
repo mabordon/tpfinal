@@ -26,8 +26,7 @@ def get_feeling(scores):
                  feeling=category
      return feeling     
 
-def negative_or_positive(scores):
-    return scores['compound']>=0.05 and scores['compound']<=-0.05
+
 
 def get_compound(scores):
       return scores["compound"]

@@ -12,7 +12,7 @@ output='./clusterprocessor/output/cluster.png'
      
 
 
-def calculate_results(topiclist,opinions):
+def groupbytopicsandopinion(topiclist,opinions):
       results={}
       for topic, opinion in zip(topiclist,opinions):
             if not topic in results:
@@ -41,7 +41,7 @@ def calculate_summarized(results):
 
 #Devolvemos la cantidad de clusters
 def calculate_k(topiclist, opinions):
-      results=calculate_results(topiclist,opinions)
+      results=groupbytopicsandopinion(topiclist,opinions)
       summarized=calculate_summarized(results)      
       k=0
       for topic in summarized:
@@ -65,8 +65,8 @@ def make_cluster(Data):
 
        plt.scatter(df['topic'], df['opinion'], marker="o",s=100, alpha=0.5,c=asignar) 
        plt.scatter(centroids[:, 0], centroids[:, 1],marker = "*", alpha = 0.9,s=300,c='red',label='Centroides')
-       plt.title('Clúster de  topicos')
-       plt.xlabel('Topicos')
+       plt.title('Clúster de  tópicos')
+       plt.xlabel('Tópicos')
        plt.ylabel('Opiniones')
        plt.legend()
        #plt.show()

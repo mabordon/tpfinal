@@ -1,10 +1,10 @@
 from comentarioDB import ComentarioDB
-from sentimentanalyzer import negative_or_positive
+import sentimentanalyzer 
 import text_analyzer
 import json
-candidate_labels = ["salary", "work-environment", "bosses","facilities"]
 
-def process():
+
+def process(canditate_labels):
         db=ComentarioDB.getDataBase()      
         corpus=None 
         topiclist=[]
@@ -23,20 +23,22 @@ def process():
                        results_cons=text_analyzer.analyze(corpus,candidate_labels)
                        print(results_cons)
                        indice=candidate_labels.index(results_cons['topic'])
+                       print(indice,results_cons['topic'])
                        topiclist.append(indice)
                        opinionlist.append(results_cons['feeling'])
-                       if rowindex==10: break
+                       if rowindex==70: break
                        rowindex+=1
         dict_object={"topic":topiclist,"opinion":opinionlist}      
         json_string=json.dumps(dict_object)             
         print(json_string)   
-        jsonFile = open("./clusterprocessor/input/bajada1.json", "w")  
+        jsonFile = open("./clusterprocessor/input/bajada.json", "w")  
         jsonFile.write(json_string)
         jsonFile.close()        
                          
 
 
 if __name__=='__main__':
-         process()
+         candidate_labels = ["salary", "work-environment", "bosses","facilities"]
+         process(candidate_labels)
  
  
